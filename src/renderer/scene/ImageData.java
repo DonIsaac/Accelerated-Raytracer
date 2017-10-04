@@ -1,4 +1,4 @@
-package renderer.world;
+package renderer.scene;
 
 import java.awt.image.BufferedImage;
 
