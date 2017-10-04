@@ -39,6 +39,17 @@ public class Transform {
 	}
 	
 	public static Transform getTranslationInstance(double x, double y, double z) {
+		double mat[] = new double[16];
+		for (int i = 0; i < mat.length; i++) {
+			if (i % 5 != 0)
+				mat[i] = 0.0;
+			else
+				mat[i] = 1.0;
+		}
+		mat[12] = x;
+		mat[13] = y;
+		mat[14] = z;
+		return new Transform(mat);
 		
 	}
 }
