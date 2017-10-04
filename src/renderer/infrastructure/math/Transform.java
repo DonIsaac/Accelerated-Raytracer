@@ -23,6 +23,17 @@ public class Transform {
 	// -------------------
 	// ~~Factory methods~~
 	// -------------------
+	/**
+	 * Creates a new identity <code>Transform</code> instance.
+	 * <p>The identity matrix looks like:</p>
+	 * <pre>
+	 * |1 0 0 0|
+	 * |0 1 0 0|
+	 * |0 0 1 0|
+	 * |0 0 0 1|
+	 * </pre>
+	 * @return a identity <code>Transform</code> matrix instance
+	 */
 	public static Transform getIdentityInstance() {
 		double mat[] = new double[16];
 		for (int i = 0; i < mat.length; i++) {
@@ -33,11 +44,35 @@ public class Transform {
 		}
 		return new Transform(mat);
 	}
-	
+	/**
+	 * Creates a new <code>Transform</code> instance that has been modified to apply a translation transformation.
+	 *  <p>The resulting matrix looks like:</p>
+	 * <pre>
+	 * |1 0 0 x|
+	 * |0 1 0 y|
+	 * |0 0 1 z|
+	 * |0 0 0 1|
+	 * </pre>
+	 * @param v the <code>Vector3</code> that defines how far to translate the matrix in each direction
+	 * @return a translated <code>Transform</code> instance
+	 */
 	public static Transform getTranslationInstance(Vector3 v) {
 		return getTranslationInstance(v.x,v.y,v.z);
 	}
-	
+	/**
+	 * Creates a new <code>Transform</code> instance that has been modified to apply a translation transformation.
+	 *   <p>The resulting matrix looks like:</p>
+	 * <pre>
+	 * |1 0 0 x|
+	 * |0 1 0 y|
+	 * |0 0 1 z|
+	 * |0 0 0 1|
+	 * </pre>
+	 * @param x how far to translate along the X axis
+	 * @param y how far to translate along the Y axis
+	 * @param z how far to translate along the Z axis
+	 * @return a translated <code>Transform</code> instance
+	 */
 	public static Transform getTranslationInstance(double x, double y, double z) {
 		double mat[] = new double[16];
 		for (int i = 0; i < mat.length; i++) {
