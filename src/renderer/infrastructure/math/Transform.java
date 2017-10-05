@@ -346,10 +346,10 @@ public class Transform {
 	 * Essentially runs the code:
 	 * 
 	 * <pre>
-	 * M = M * N
+	 * T' = T * M
 	 * </pre>
 	 * 
-	 * where <code>M</code> and <code>N</code> are matrices.
+	 * where <code>T</code> and <code>M</code> are matrices.
 	 * 
 	 * @param M
 	 *            the matrix to multiply by.
@@ -359,9 +359,6 @@ public class Transform {
 		double mat[] = new double[16];
 		double[] m1 = matrix;
 		double[] m2 = M.matrix;
-		/*
-		 * | 0 4 8 12| | 1 5 9 13| | 2 6 10 14| | 3 7 11 15|
-		 */
 		// I'm way more proud of this than I should be
 		for (int i = 0, m = 0, n = 0; i < 16; i++) {
 			n = i % 4;

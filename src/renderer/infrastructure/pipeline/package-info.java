@@ -5,4 +5,4 @@
  * @author Don Isaac
  *
  */
-package renderer.infrastructure.pipeline.models;
+package renderer.infrastructure.pipeline;
