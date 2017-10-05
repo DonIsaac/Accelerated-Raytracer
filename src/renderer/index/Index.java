@@ -11,7 +11,7 @@ public class Index {
 		System.out.println(M);
 		Transform N = Transform.getTranslationInstance(5,5,5);
 		System.out.println(N);
-		M.combine(N);
+		M.multiply(N);
 		System.out.println(M);
 	}
 
