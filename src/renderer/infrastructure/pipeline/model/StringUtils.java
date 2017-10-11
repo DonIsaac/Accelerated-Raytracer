@@ -1,11 +1,11 @@
-package renderer.infrastructure.pipeline;
+package renderer.infrastructure.pipeline.model;
 
 import java.util.*;
 import static java.util.logging.Level.SEVERE;
 import java.util.logging.Logger;
 /**
  * A String utility toolkit meant to assist with parsing WaveFront .obj files.
- * @see renderer.infrastructure.pipeline.OBJParser
+ * @see renderer.infrastructure.pipeline.model.OBJParser
  * @author <a href="https://github.com/seanrowens/oObjLoader">Sean R. Owens</a>
  *
  */

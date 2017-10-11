@@ -1,11 +1,11 @@
-package renderer.infrastructure.math;
+package renderer;
 
-public class Tools {
-	/**Machine Epsilon*/
+public class Utils {
+	/**<a href="https://en.wikipedia.org/wiki/Machine_epsilon">Machine Epsilon</a>*/
 	public static double EPSILON = createE();
 	
 	/**
-	 * Determines if two doubles are equal to each other while factoring in imprecisions.
+	 * Determines if two doubles are equal to each other while factoring in imprecision.
 	 * @param a The first double to compare
 	 * @param b The second double to compare
 	 * @return <code>true</code> if equal, <code>false</code> otherwise

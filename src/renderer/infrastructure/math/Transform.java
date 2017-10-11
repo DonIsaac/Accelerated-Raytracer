@@ -387,7 +387,10 @@ public class Transform {
 		}
 		return s.toString();
 	}
-
+	/**
+	 * Creates an identity matrix as an array for convenience and speed.
+	 * @return
+	 */
 	private static double[] blankMat() {
 		double mat[] = new double[16];
 		for (int i = 0; i < mat.length; i++) {

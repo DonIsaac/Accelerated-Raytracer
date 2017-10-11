@@ -1,4 +1,4 @@
-package renderer.infrastructure.pipeline;
+package renderer.infrastructure.pipeline.model;
 
 import java.io.*;
 import java.io.IOException;
@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  */
 public class OBJParser {
 	private Logger log = Logger.getLogger(OBJParser.class.getName());
-
+	//TODO this may or may not work. Keep an eye on this jawnt
 	// Tokens for parsing.
 	private final static String OBJ_VERTEX_TEXTURE = "vt";
 	private final static String OBJ_VERTEX_NORMAL = "vn";
@@ -62,15 +62,12 @@ public class OBJParser {
 	BuilderInterface builder = null;
 	File objFile = null;
 
-	public OBJParser(BuilderInterface builder, String filename) throws FileNotFoundException, IOException {
+	public OBJParser(BuilderInterface builder) throws FileNotFoundException, IOException {
         this.builder = builder;
-        builder.setObjFilename(filename);
-        parseObjFile(filename);
-
-        builder.doneParsingObj(filename);
     }
 
-	private void parseObjFile(String objFilename) throws FileNotFoundException, IOException {
+	public void parseObjFile(String objFilename) throws FileNotFoundException, IOException {
+		builder.startParsing(objFilename);
 		int lineCount = 0;
 		FileReader fileReader = null;
 		BufferedReader bufferedReader = null;
@@ -133,8 +130,8 @@ public class OBJParser {
 			lineCount++;
 		}
 		bufferedReader.close();
-
 		log.log(INFO, "Loaded " + lineCount + " lines");
+		builder.doneParsingObj(objFilename);
 	}
 
 	// @TODO: processVertex calls parseFloatList with params expecting

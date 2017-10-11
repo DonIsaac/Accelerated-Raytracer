@@ -1,6 +1,6 @@
 package renderer.infrastructure.math;
 
-import static renderer.infrastructure.math.Tools.*;
+import static renderer.Utils.*;
 
 /**
  * Represents a vector in 3D space. This class comes equipped with methods
@@ -39,6 +39,14 @@ public class Vector3 {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+	}
+	/**
+	 * Default constructor. Creates a <code>Vector3</code> at <0,0,0>.
+	 */
+	public Vector3() {
+		this.x = 0.0;
+		this.y = 0.0;
+		this.z = 0.0;
 	}
 
 	/**
