@@ -18,10 +18,27 @@ public class Config {
 	 */
 	public static String RAYTRACER_HOME;// = "D:\\Personal\\Raytrace Files\\";
 	// Sub-directories used by the Raytracer. You do not need to edit these.
-	public static final String PATH_PICTURE_SAVE = RAYTRACER_HOME + "Pictures\\";
-	public static final String PATH_RESOURCES = RAYTRACER_HOME + "Resourecs\\";
-	public static final String PATH_LOGGER = RAYTRACER_HOME + "Logs\\log_file.log";
+	public static String PATH_PICTURE_SAVE = RAYTRACER_HOME + "pictures/";
+	public static String PATH_MOVIES_SAVE = RAYTRACER_HOME + "movies/";
+	public static String PATH_RESOURCES = RAYTRACER_HOME + "res/";
+	public static String PATH_RESOURCES_SCENES = PATH_RESOURCES+"scenes/";
+	public static String PATH_RESOURCES_MODELS = PATH_RESOURCES+"models/";
+	public static String PATH_RESOURCES_MATERIALS = PATH_RESOURCES+"materials/";
+	public static String PATH_RESOURCES_TEXTURES = PATH_RESOURCES+"tex/";
+	public static String PATH_RESOURCES_ANIMATIONS = PATH_RESOURCES+"anim/";
+	public static String PATH_LOGGER = RAYTRACER_HOME + "logs/log_file.log";
 
+	public static void initPaths() {
+		PATH_PICTURE_SAVE = RAYTRACER_HOME + "pictures/";
+		PATH_MOVIES_SAVE = RAYTRACER_HOME + "movies/";
+		PATH_RESOURCES = RAYTRACER_HOME + "res/";
+		PATH_RESOURCES_SCENES = PATH_RESOURCES+"scenes/";
+		PATH_RESOURCES_MODELS = PATH_RESOURCES+"models/";
+		PATH_RESOURCES_MATERIALS = PATH_RESOURCES+"materials/";
+		PATH_RESOURCES_TEXTURES = PATH_RESOURCES+"tex/";
+		PATH_RESOURCES_ANIMATIONS = PATH_RESOURCES+"anim/";
+		PATH_LOGGER = RAYTRACER_HOME + "logs/log_file.log";
+	}
 	//Logging utilities TODO should this go in Config or Util?
 	/**The logger used by the Raytracer. All output goes here.*/
 	public static Logger LOG;
