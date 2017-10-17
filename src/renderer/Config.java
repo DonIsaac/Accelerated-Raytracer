@@ -11,7 +11,7 @@ import java.util.logging.StreamHandler;
 public class Config {
 	/** Should the Raytracer be run in debug mode? */
 	public static boolean DEBUG  = true;
-
+	//TODO create path variables for Mac and Windows (currently for Mac) Mac = / Windows = \\)
 	/**
 	 * Home directory for all of the Raytracer's necessary directories. Edit this to
 	 * suit your own computer.

@@ -1,11 +1,17 @@
 package renderer.infrastructure.pipeline.model;
 
-import java.io.*;
-import java.io.IOException;
 import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.SEVERE;
 import static java.util.logging.Level.WARNING;
-import java.util.logging.Logger;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+import renderer.scene.actors.Model;
+import static renderer.Config.LOG;
 
 /**
  * A parser for OBJ files. This class is not an original work, but is instead a
@@ -16,7 +22,6 @@ import java.util.logging.Logger;
  *
  */
 public class OBJParser {
-	private Logger log = Logger.getLogger(OBJParser.class.getName());
 	//TODO this may or may not work. Keep an eye on this jawnt
 	// Tokens for parsing.
 	private final static String OBJ_VERTEX_TEXTURE = "vt";
@@ -66,13 +71,13 @@ public class OBJParser {
         this.builder = builder;
     }
 
-	public void parseObjFile(String objFilename) throws FileNotFoundException, IOException {
-		builder.startParsing(objFilename);
+	public void parseObjFile(File obj) throws FileNotFoundException, IOException {
+		objFile = obj;
+		builder.startParsing(obj.getName());
 		int lineCount = 0;
 		FileReader fileReader = null;
 		BufferedReader bufferedReader = null;
 
-		objFile = new File(objFilename);
 		fileReader = new FileReader(objFile);
 		bufferedReader = new BufferedReader(fileReader);
 
@@ -125,13 +130,13 @@ public class OBJParser {
 			} else if (line.startsWith(OBJ_MTLLIB)) {
 				processMaterialLib(line);
 			} else {
-				log.log(WARNING, "line " + lineCount + " unknown line |" + line + "|");
+				LOG.log(WARNING, "line " + lineCount + " unknown line |" + line + "|");
 			}
 			lineCount++;
 		}
 		bufferedReader.close();
-		log.log(INFO, "Loaded " + lineCount + " lines");
-		builder.doneParsingObj(objFilename);
+		LOG.log(INFO, "Loaded " + lineCount + " lines");
+		Model m = builder.doneParsingObj();
 	}
 
 	// @TODO: processVertex calls parseFloatList with params expecting
@@ -165,7 +170,7 @@ public class OBJParser {
 	// > negative values may result in an undefined point in a curve or
 	// > surface.
 	private void processVertex(String line) {
-		float[] values = StringUtils.parseFloatList(3, line, OBJ_VERTEX.length());
+		double[] values = StringUtils.parseFloatList(3, line, OBJ_VERTEX.length());
 		builder.addVertexGeometric(values[0], values[1], values[2]);
 	}
 
@@ -193,7 +198,7 @@ public class OBJParser {
 	//
 	// w is a value for the depth of the texture. The default is 0.
 	private void processVertexTexture(String line) {
-		float[] values = StringUtils.parseFloatList(2, line, OBJ_VERTEX_TEXTURE.length());
+		double[] values = StringUtils.parseFloatList(2, line, OBJ_VERTEX_TEXTURE.length());
 		builder.addVertexTexture(values[0], values[1]);
 	}
 
@@ -221,7 +226,7 @@ public class OBJParser {
 	//
 	// w is a value for the depth of the texture. The default is 0.
 	private void processVertexNormal(String line) {
-		float[] values = StringUtils.parseFloatList(3, line, OBJ_VERTEX_NORMAL.length());
+		double[] values = StringUtils.parseFloatList(3, line, OBJ_VERTEX_NORMAL.length());
 		builder.addVertexNormal(values[0], values[1], values[2]);
 	}
 
@@ -599,7 +604,7 @@ public class OBJParser {
 				try {
 					parseMtlFile(matlibnames[loopi]);
 				} catch (FileNotFoundException e) {
-					log.log(SEVERE, "Can't find material file name='" + matlibnames[loopi] + "', e=" + e);
+					LOG.log(SEVERE, "Can't find material file name='" + matlibnames[loopi] + "', e=" + e);
 				}
 			}
 		}
@@ -686,14 +691,14 @@ public class OBJParser {
 			} else if (line.startsWith(MTL_REFL)) {
 				processRefl(line);
 			} else {
-				log.log(WARNING, "line " + lineCount + " unknown line |" + line + "|");
+				LOG.log(WARNING, "line " + lineCount + " unknown line |" + line + "|");
 
 			}
 			lineCount++;
 		}
 		bufferedReader.close();
 
-		log.log(INFO, "OBJParser.parseMtlFile: Loaded " + lineCount + " lines");
+		LOG.log(INFO, "OBJParser.parseMtlFile: Loaded " + lineCount + " lines");
 	}
 
 	private void processNewmtl(String line) {
@@ -713,20 +718,20 @@ public class OBJParser {
 
 		String[] tokens = StringUtils.parseWhitespaceList(line.substring(fieldName.length()));
 		if (null == tokens) {
-			log.log(SEVERE, "Got Ka line with no tokens, line = |" + line + "|");
+			LOG.log(SEVERE, "Got Ka line with no tokens, line = |" + line + "|");
 			return;
 		}
 		if (tokens.length <= 0) {
-			log.log(SEVERE, "Got Ka line with no tokens, line = |" + line + "|");
+			LOG.log(SEVERE, "Got Ka line with no tokens, line = |" + line + "|");
 			return;
 		}
 		if (tokens[0].equals("spectral")) {
 			// Ka spectral file.rfl factor_num
-			log.log(WARNING,
+			LOG.log(WARNING,
 					"Sorry Charlie, this parse doesn't handle \'spectral\' parsing.  (Mostly because I can't find any info on the spectra.rfl file.)");
 			return;
 			// if(tokens.length < 2) {
-			// log.log(SEVERE, "Got spectral line with not enough tokens, need at least one
+			// LOG.LOG(SEVERE, "Got spectral line with not enough tokens, need at least one
 			// token for spectral file and one value for factor, found "+(tokens.length-1)+"
 			// line = |"+line+"|");
 			// return;
@@ -735,13 +740,13 @@ public class OBJParser {
 			// Ka xyz x_num y_num z_num
 
 			if (tokens.length < 2) {
-				log.log(SEVERE, "Got xyz line with not enough x/y/z tokens, need at least one value for x, found "
+				LOG.log(SEVERE, "Got xyz line with not enough x/y/z tokens, need at least one value for x, found "
 						+ (tokens.length - 1) + " line = |" + line + "|");
 				return;
 			}
-			float x = Float.parseFloat(tokens[1]);
-			float y = x;
-			float z = x;
+			double x = Float.parseFloat(tokens[1]);
+			double y = x;
+			double z = x;
 			if (tokens.length > 2) {
 				y = Float.parseFloat(tokens[2]);
 			}
@@ -751,9 +756,9 @@ public class OBJParser {
 			builder.setXYZ(type, x, y, z);
 		} else {
 			// Ka r_num g_num b_num
-			float r = Float.parseFloat(tokens[0]);
-			float g = r;
-			float b = r;
+			double r = Float.parseFloat(tokens[0]);
+			double g = r;
+			double b = r;
 			if (tokens.length > 1) {
 				g = Float.parseFloat(tokens[1]);
 			}
@@ -768,7 +773,7 @@ public class OBJParser {
 		line = line.substring(MTL_ILLUM.length()).trim();
 		int illumModel = Integer.parseInt(line);
 		if ((illumModel < 0) || (illumModel > 10)) {
-			log.log(SEVERE, "Got illum model value out of range (0 to 10 inclusive is allowed), value=" + illumModel
+			LOG.log(SEVERE, "Got illum model value out of range (0 to 10 inclusive is allowed), value=" + illumModel
 					+ ", line=" + line);
 			return;
 		}
@@ -783,25 +788,25 @@ public class OBJParser {
 			halo = true;
 			line = line.substring(MTL_D_DASHHALO.length()).trim();
 		}
-		float factor = Float.parseFloat(line);
+		double factor = Float.parseFloat(line);
 		builder.setD(halo, factor);
 	}
 
 	private void processNs(String line) {
 		line = line.substring(MTL_NS.length()).trim();
-		float exponent = Float.parseFloat(line);
+		double exponent = Float.parseFloat(line);
 		builder.setNs(exponent);
 	}
 
 	private void processSharpness(String line) {
 		line = line.substring(MTL_SHARPNESS.length()).trim();
-		float value = Float.parseFloat(line);
+		double value = Float.parseFloat(line);
 		builder.setSharpness(value);
 	}
 
 	private void processNi(String line) {
 		line = line.substring(MTL_NI.length()).trim();
-		float opticalDensity = Float.parseFloat(line);
+		double opticalDensity = Float.parseFloat(line);
 		builder.setNi(opticalDensity);
 	}
 
@@ -936,7 +941,7 @@ public class OBJParser {
 				type = BuilderInterface.MTL_REFL_TYPE_CUBE_RIGHT;
 				filename = line.substring(MTL_REFL_TYPE_CUBE_RIGHT.length()).trim();
 			} else {
-				log.log(SEVERE, "unknown material refl -type, line = |" + line + "|");
+				LOG.log(SEVERE, "unknown material refl -type, line = |" + line + "|");
 				return;
 			}
 		} else {

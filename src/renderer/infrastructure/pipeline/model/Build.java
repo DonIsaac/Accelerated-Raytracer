@@ -3,6 +3,7 @@ package renderer.infrastructure.pipeline.model;
 import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.SEVERE;
 
+import static renderer.Config.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Logger;
@@ -30,6 +31,8 @@ public class Build implements BuilderInterface {
 	public int faceQuadCount = 0;
 	public int facePolyCount = 0;
 	public int faceErrorCount = 0;
+	
+	boolean isParsing;
 
 	/**
 	 * Builds a {@link Model}. This class is a modified work, the original class was
@@ -39,12 +42,23 @@ public class Build implements BuilderInterface {
 	 * @author Don Isaac and Sean R. Owens.
 	 */
 	public Build() {
+		isParsing = false;
 	}
 
+	public void startParsing(String name) {
+		if(isParsing)
+			
+		this.objectName = name;
+	}
 	public void setObjFilename(String filename) {
 		this.objFilename = filename;
 	}
 
+	@Override
+	public void addObjectName(String name) {
+		
+	}
+	
 	public void addVertexGeometric(float x, float y, float z) {
 		vertices.add(new VertexGeometric(x, y, z));
 		// log.log(INFO,"Added geometric vertex " + verticesG.size() + " = " +
@@ -285,9 +299,7 @@ public class Build implements BuilderInterface {
 		}
 	}
 
-	public void startParsing(String name) {
-		this.objectName = name;
-	}
+	
 
 	public void setCurrentSmoothingGroup(int groupNumber) {
 		currentSmoothingGroupNumber = groupNumber;
@@ -508,10 +520,8 @@ public class Build implements BuilderInterface {
 	}
 
 	public void doneParsingObj(String filename) {
-		log.log(INFO,
-				"Loaded filename '" + filename + "' with " + vertices.size() + " verticesG, " + textures.size()
-						+ " verticesT, " + normals.size() + " verticesN and " + faces.size() + " faces, of which "
-						+ faceTriCount + " triangles, " + faceQuadCount + " quads, and " + facePolyCount
-						+ " with more than 4 points, and faces with errors " + faceErrorCount);
+		log.info("Finished parsing "+ this.objectName);
 	}
+
+	
 }

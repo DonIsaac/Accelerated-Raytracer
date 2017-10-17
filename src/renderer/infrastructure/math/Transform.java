@@ -268,8 +268,10 @@ public class Transform {
 			this.translate(-t.x, -t.y, -t.z);
 		}
 		multiply(Transform.getRotationXInstance(theta));
-
+		
+		if(!aroundOrigin)
 		translate(t);
+		
 		return this;
 	}
 	
@@ -293,8 +295,10 @@ public class Transform {
 			this.translate(-t.x, -t.y, -t.z);
 		}
 		multiply(Transform.getRotationYInstance(theta));
-
+		
+		if(!aroundOrigin)
 		translate(t);
+		
 		return this;
 	}
 	
@@ -318,8 +322,10 @@ public class Transform {
 			this.translate(-t.x, -t.y, -t.z);
 		}
 		multiply(Transform.getRotationZInstance(theta));
-
+		
+		if(!aroundOrigin)
 		translate(t);
+		
 		return this;
 	}
 	

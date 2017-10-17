@@ -4,6 +4,7 @@ import static renderer.Config.LOG;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 
 import renderer.scene.Animation;
@@ -17,22 +18,47 @@ public class ContentManager {
 	public static final int ERROR_NOT_DIRECTORY = 1;
 	public static final int ERROR_DIRECTORY_EMPTY = 2;
 
-	public HashMap<String, Scene> scenes;
-	public HashMap<String, Model> models;
-	public HashMap<String, Material> materials;
-	public HashMap<String, File> textures;
-	public HashMap<String, Light> lights;
-	public HashMap<String, Animation> animations;
-	public HashMap<String, Camera> cameras;
+	public ConcurrentHashMap<String, Scene> scenes;
+	public ConcurrentHashMap<String, Model> models;
+	public ConcurrentHashMap<String, Material> materials;
+	public ConcurrentHashMap<String, File> textures;
+	public ConcurrentHashMap<String, Light> lights;
+	public ConcurrentHashMap<String, Animation> animations;
+	public ConcurrentHashMap<String, Camera> cameras;
 
+	/*
+	 * possible code for multithreading parsing
+	 * 
+	 * private ExecutorService e = Executors.newFixedThreadPool(# of dirs to parse)
+	 * private Future<>[] futures = new Future<>[# or dirs]
+	 * for(every dir){
+	 *    futures[i]= e.submit(new Thread(run the parser)
+	 *   }  
+	 *   boolean isDone = false;
+	 *   while(!isDone){
+	 *   boolean tIsDone = true;
+	 *   for(Future  f: futures){
+	 *       tIsDone = tIsDone && f.isDone()
+	 *       }
+	 *    isDone = tIsDone;
+	 *    }
+	 *    
+	 *    for(Future f: futures){
+	 *       resourceList.add(f.get());
+	 *    }
+	 * 
+	 */
+	/**
+	 * Default constructor. Creates a new <code>ContentManager</code>
+	 */
 	public ContentManager() {
-		scenes = new HashMap<String, Scene>();
-		models = new HashMap<String, Model>();
-		materials = new HashMap<String, Material>();
-		textures = new HashMap<String, File>();
-		lights = new HashMap<String, Light>();
-		animations = new HashMap<String, Animation>();
-		cameras = new HashMap<String, Camera>();
+		scenes = new ConcurrentHashMap<String, Scene>();
+		models = new ConcurrentHashMap<String, Model>();
+		materials = new ConcurrentHashMap<String, Material>();
+		textures = new ConcurrentHashMap<String, File>();
+		lights = new ConcurrentHashMap<String, Light>();
+		animations = new ConcurrentHashMap<String, Animation>();
+		cameras = new ConcurrentHashMap<String, Camera>();
 
 	}
 

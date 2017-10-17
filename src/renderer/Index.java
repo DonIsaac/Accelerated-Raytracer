@@ -46,6 +46,8 @@ public class Index {
 		} else {
 
 			// logFile.createNewFile();
+			
+			//TODO Files aren't createdd yet, ut I need to log file creation. What do?
 		}
 
 		// handler = new FileHandler(PATH_LOGGER);

@@ -1,8 +1,9 @@
 package renderer.infrastructure.pipeline.model;
 
-import java.util.*;
 import static java.util.logging.Level.SEVERE;
-import java.util.logging.Logger;
+import static renderer.Config.LOG;
+
+import java.util.ArrayList;
 /**
  * A String utility toolkit meant to assist with parsing WaveFront .obj files.
  * @see renderer.infrastructure.pipeline.model.OBJParser
@@ -10,13 +11,12 @@ import java.util.logging.Logger;
  *
  */
 public class StringUtils {
-    private static Logger log = Logger.getLogger(StringUtils.class.getName());
 
     // ----------------------------------------------------------------------
     // String parsing stuff
     // ----------------------------------------------------------------------
     public static void printErrMsg(String methodName, String errorMsg, int mCount, char message[]) {
-        log.log(SEVERE, methodName + ": " + errorMsg);
+        LOG.log(SEVERE, methodName + ": " + errorMsg);
         String msg1 = "ERROR: " + methodName + ": msg=\\";
         String msg2 = "ERROR: " + methodName + ":      ";
         for (int loopi = 0; loopi < message.length; loopi++) {
@@ -25,8 +25,8 @@ public class StringUtils {
         }
         msg1 = msg1 + "\\";
         msg2 = msg2 + "^";
-        log.log(SEVERE, msg1);
-        log.log(SEVERE, msg1);
+        LOG.log(SEVERE, msg1);
+        LOG.log(SEVERE, msg1);
     }
 
     // if errMsg != null, then we test if we've run past end of message
@@ -50,7 +50,7 @@ public class StringUtils {
         return mCount;
     }
 
-    public static float[] parseFloatList(int numFloats, String list, int startIndex) {
+    public static double[] parseFloatList(int numFloats, String list, int startIndex) {
         if (list == null) {
             return null;
         }
@@ -58,7 +58,7 @@ public class StringUtils {
             return null;
         }
 
-        float[] returnArray = new float[numFloats];
+        double[] returnArray = new double[numFloats];
         int returnArrayCount = 0;
 
         // Copy list into a char array.
@@ -208,17 +208,17 @@ public class StringUtils {
             return null;
         }
 
-        //	log.log(INFO, "list=|"+list+"|");
+        //	LOG.LOG(INFO, "list=|"+list+"|");
 
         String[] vertexStrings = parseWhitespaceList(list);
 
-        //	log.log(INFO, "found "+vertexStrings.length+" strings in parseWhitespaceList");
+        //	LOG.LOG(INFO, "found "+vertexStrings.length+" strings in parseWhitespaceList");
 
         ArrayList<Integer> returnList = new ArrayList<Integer>();
         Integer emptyMarker = new Integer(BuilderInterface.EMPTY_VERTEX_VALUE);
 
         for (int loopi = 0; loopi < vertexStrings.length; loopi++) {
-            //	    log.log(INFO, "parsing vertexStrings["+loopi+"]=|"+vertexStrings[loopi]+"|");
+            //	    LOG.LOG(INFO, "parsing vertexStrings["+loopi+"]=|"+vertexStrings[loopi]+"|");
             parseVerticeNTuple(vertexStrings[loopi], returnList, emptyMarker, expectedValuesPerTuple);
         }
 
@@ -231,20 +231,20 @@ public class StringUtils {
 
     private static void parseVerticeNTuple(String list, ArrayList<Integer> returnList, Integer emptyMarker, int expectedValueCount) {
 
-//        	log.log(INFO, "list=|"+list+"|");
+//        	LOG.LOG(INFO, "list=|"+list+"|");
 
         String[] numbers = parseList('/', list);
-//        	log.log(INFO, "found "+numbers.length+" strings in parselist with delim /");
+//        	LOG.LOG(INFO, "found "+numbers.length+" strings in parselist with delim /");
         int foundCount = 0;
 
         int index = 0;
         while (index < numbers.length) {
-//            	    log.log(INFO, "examining numbers["+index+"]=|"+numbers[index]+"|");
+//            	    LOG.LOG(INFO, "examining numbers["+index+"]=|"+numbers[index]+"|");
             if (numbers[index].trim().equals("")) {
-//                log.log(INFO, "numbers["+index+"] is empty, adding emptymarker to list");
+//                LOG.LOG(INFO, "numbers["+index+"] is empty, adding emptymarker to list");
                 returnList.add(emptyMarker);
             } else {
-//                                log.log(INFO, "numbers["+index+"] is NOT empty, adding parsed int "+Integer.parseInt(numbers[index])+" to list.");
+//                                LOG.LOG(INFO, "numbers["+index+"] is NOT empty, adding parsed int "+Integer.parseInt(numbers[index])+" to list.");
                 returnList.add(Integer.parseInt(numbers[index]));
             }
             foundCount++;
