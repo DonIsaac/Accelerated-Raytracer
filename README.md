@@ -2,7 +2,7 @@
 
 A GPU Accelerated Raytracer. Not even in Alpha yet.
 
-## Changes From The [Last Raytracer][https://github.com/DonIsaac/Raytrace-Renderer]
+## Changes From The [Last Raytracer](https://github.com/DonIsaac/Raytrace-Renderer)
 1. Improved workflow
 2. GPU acceleration
 3. Improved math classes
