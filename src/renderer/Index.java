@@ -87,6 +87,8 @@ public class Index {
 	 *             - If an I/O error occurred
 	 */
 	private static void setupFiletree(String raytracerHome) throws IOException {
+		//TODO: remove directory creation; this is now handled by the installation wizard.
+		//TODO: method for getting the path of the program is String dir = new File(".").getCanonicalPath();
 		File f = new File(raytracerHome);
 		LOG.info(Boolean.toString(f.exists()) + " RM: " + raytracerHome);
 		if (!f.exists()) {

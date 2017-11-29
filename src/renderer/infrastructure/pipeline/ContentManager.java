@@ -7,12 +7,12 @@ import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 
-import renderer.scene.Animation;
 import renderer.scene.Camera;
 import renderer.scene.Scene;
 import renderer.scene.actors.Light;
 import renderer.scene.actors.Material;
 import renderer.scene.actors.Model;
+import renderer.scene.animation.Animation;
 
 public class ContentManager {
 	public static final int ERROR_NOT_DIRECTORY = 1;
@@ -77,7 +77,6 @@ public class ContentManager {
 		}
 
 		File[] filesInDirectory = directory.listFiles();
-
 		if (filesInDirectory.length == 0) {
 			LOG.log(Level.WARNING, "The directory " + directory.getAbsolutePath() + " is empty!");
 			return ERROR_NOT_DIRECTORY;

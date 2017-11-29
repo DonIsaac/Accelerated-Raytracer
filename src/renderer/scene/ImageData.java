@@ -3,17 +3,18 @@ package renderer.scene;
 import java.awt.image.BufferedImage;
 
 /**
- * A struct-like class for storing data the Camera needs to create an image, such as the width/height of the image.
+ * A struct-like class that stores data needed by the Camera to create an image, such as the width/height of the image.
+ * @see Camera
  * @author Don Isaac
  *
  */
 public class ImageData {
-	private int width, height, imageType;
-	private double focalLength;
-	private boolean antiAliasing;
+	public int width, height, imageType;
+	public double focalLength;
+	public boolean antiAliasing;
 
 	/**
-	 * Creates a standard ImageData struct with non-custom settings.
+	 * Default constructor. Creates a standard ImageData struct with non-custom settings.
 	 */
 	public ImageData() {
 		this.width = 1920;
@@ -38,28 +39,9 @@ public class ImageData {
 		this.antiAliasing = antiAliasing;
 		this.imageType = imageType;
 	}
-
-	public int width() {
-		return this.width;
-	}
-
-	public int height() {
-		return this.height;
-	}
 	
-	public double aspectRatio() {
-		return (double)width/(double)height;
-	}
-	
-	public double focalLength() {
-		return this.focalLength;
-	}
-	
-	public boolean antiAliasting() {
-		return this.antiAliasing;
-	}
-	
-	public int imageType() {
-		return imageType();
+	@Override
+	public ImageData clone() {
+		return new ImageData(width, height, focalLength, imageType, antiAliasing);
 	}
 }

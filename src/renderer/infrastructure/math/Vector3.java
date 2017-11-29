@@ -77,12 +77,12 @@ public class Vector3 {
 	 */
 	public Vector3 nor() {
 		double len = len();
-		if (len > 0) {
+		if (len > 0.0) {
 			this.x /= len;
 			this.y /= len;
 			this.z /= len;
 		} else
-			throw new ArithmeticException("You can't normalize <0,0,0>");
+			throw new ArithmeticException("You can't normalize the zero vector");
 
 		return this;
 	}
@@ -99,7 +99,7 @@ public class Vector3 {
 		double dx = this.x - v.x;
 		double dy = this.y - v.y;
 		double dz = this.z - v.z;
-		return Math.sqrt(dx * dx + dy + dy + dz * dz);
+		return Math.sqrt(dx * dx + dy * dy + dz * dz);
 	}
 
 	/**
